@@ -2,6 +2,8 @@
 """ Console Module """
 import cmd
 import sys
+from shlex import split
+from datetime import datetime
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -33,7 +35,7 @@ class HBNBCommand(cmd.Cmd):
     def preloop(self):
         """Prints if isatty is false"""
         if not sys.__stdin__.isatty():
-            print('(hbnb)')
+            print('(hbnb)', end=" ")
 
     def precmd(self, line):
         """Reformat command line for advanced command syntax.
@@ -115,16 +117,26 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        if not args:
+        list = args.split(" ")
+        if not list:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        elif list[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
-        storage.save()
+        kwargs = {}
+        for i in range(1, len(list)):
+            key, value = tuple(list[i].split("="))
+            if value[0] == '"':
+                    value = value.strip('"').replace("_", " ")
+            kwargs[key] = value
+        if kwargs == {}:
+            new_instance = HBNBCommand.classes[list[0]]()
+        else:
+            new_instance = HBNBCommand.classes[list[0]](**kwargs)
+        storage.new(new_instance)
         print(new_instance.id)
-        storage.save()
+        new_instance.save()
 
     def help_create(self):
         """ Help information for the create method """
