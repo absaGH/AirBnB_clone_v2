@@ -219,6 +219,8 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
                 return
             obj = storage.all(eval(args[0]))
+            #print("do_all:obj")
+            #print(obj)
             for key in obj:
                 print_list.append(str(obj[key]))
             # for k, v in storage._FileStorage__objects.items():
