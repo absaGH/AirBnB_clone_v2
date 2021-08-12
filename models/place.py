@@ -23,8 +23,9 @@ association_table = Table("place_amenity", Base.metadata,
                                  ForeignKey("amenities.id"),
                                  primary_key=True, nullable=False))
 
+
 class Place(BaseModel, Base):
-    """ A place to stay 
+    """ A place to stay
     It links to the MySQL table places
     """
     __tablename__ = "places"
@@ -46,7 +47,7 @@ class Place(BaseModel, Base):
     if getenv("HBNB_TYPE_STORAGE", None) != "db":
         @property
         def reviews(self):
-            """Get a list of all linked Reviews."""
+            """Get a list of all related Reviews"""
             review_list = []
             for review in list(models.storage.all(Review).values()):
                 if review.place_id == self.id:
@@ -55,7 +56,7 @@ class Place(BaseModel, Base):
 
         @property
         def amenities(self):
-            """Get/set linked Amenities."""
+            """Get related Amenities"""
             amenity_list = []
             for amenity in list(models.storage.all(Amenity).values()):
                 if amenity.id in self.amenity_ids:
@@ -64,5 +65,6 @@ class Place(BaseModel, Base):
 
         @amenities.setter
         def amenities(self, value):
-            if type(value) == Amenity:
+            """Set Amenities"""
+            if isinstance(value, Amenity):
                 self.amenity_ids.append(value.id)
