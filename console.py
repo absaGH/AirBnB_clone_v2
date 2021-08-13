@@ -104,8 +104,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, arg):
         """ Handles EOF to exit program """
-        print()
-        exit()
+        print("")
+        return True
 
     def help_EOF(self):
         """ Prints the help documentation for EOF """
@@ -134,7 +134,6 @@ class HBNBCommand(cmd.Cmd):
             new_instance = HBNBCommand.classes[list[0]]()
         else:
             new_instance = HBNBCommand.classes[list[0]](**kwargs)
-        #storage.new(new_instance)
         print(new_instance.id)
         new_instance.save()
 
@@ -167,7 +166,8 @@ class HBNBCommand(cmd.Cmd):
 
         key = c_name + "." + c_id
         try:
-            print(storage._FileStorage__objects[key])
+            objects = storage.all()
+            print(objects[key])
         except KeyError:
             print("** no instance found **")
 
@@ -219,20 +219,12 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
                 return
             obj = storage.all(eval(args[0]))
-            #print("do_all:obj")
-            #print(obj)
             for key in obj:
                 print_list.append(str(obj[key]))
-            # for k, v in storage._FileStorage__objects.items():
-            #    if k.split('.')[0] == args:
-            #        print_list.append(str(v))
         else:
             obj=storage.all()
             for key in obj:
                 print_list.append(str(obj[key]))
-            # for k, v in storage._FileStorage__objects.items():
-            #    print_list.append(str(v))
-
         print(print_list)
 
     def help_all(self):
