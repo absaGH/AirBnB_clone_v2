@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""unnittests for city.py."""
+"""unnittests for city.py"""
 import os
 import pep8
 import models
@@ -17,7 +17,7 @@ from sqlalchemy.orm import sessionmaker
 
 
 class TestCity(unittest.TestCase):
-    """Unittests for testing the City class."""
+    """Unittests for testing the City class"""
 
     @classmethod
     def setUpClass(cls):
