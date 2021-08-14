@@ -19,19 +19,6 @@ HBNBCommand = console.HBNBCommand
 
 class TestHBNBCommand(unittest.TestCase):
     """Class for testing HBNBCommand interpreter"""
-    #def test_pep8_conformance_console(self):
-    #    """Test that console.py conforms to PEP8."""
-    #    pep8s = pep8.StyleGuide(quiet=True)
-    #    result = pep8s.check_files(['console.py'])
-    #    self.assertEqual(result.total_errors, 0,
-    #                     "Found code style errors (and warnings).")
-
-    #def test_pep8_conformance_test_console(self):
-    #    """Test that tests/test_console.py conforms to PEP8."""
-    #    pep8s = pep8.StyleGuide(quiet=True)
-    #    result = pep8s.check_files(['tests/test_console.py'])
-    #    self.assertEqual(result.total_errors, 0,
-    #                     "Found code style errors (and warnings).")
 
     @classmethod
     def setUpClass(cls):
@@ -72,20 +59,6 @@ class TestHBNBCommand(unittest.TestCase):
             os.remove("file.json")
         except IOError:
             pass
-
-    #def test_console_module_docstring(self):
-    #    """Test for the console.py module docstring"""
-    #    self.assertIsNot(console.__doc__, None,
-    #                     "console.py needs a docstring")
-    #    self.assertTrue(len(console.__doc__) >= 1,
-    #                    "console.py needs a docstring")
-
-    #def test_HBNBCommand_class_docstring(self):
-    #    """Test for the HBNBCommand class docstring"""
-    #    self.assertIsNot(HBNBCommand.__doc__, None,
-    #                     "HBNBCommand class needs a docstring")
-    #    self.assertTrue(len(HBNBCommand.__doc__) >= 1,
-    #                    "HBNBCommand class needs a docstring")
 
     def test_docstrings(self):
         """Check for docstrings"""
@@ -244,18 +217,6 @@ class TestHBNBCommand(unittest.TestCase):
             self.HBNB.onecmd("update User 12345")
             self.assertEqual(
                 "** no instance found **\n", f.getvalue())
-        with patch("sys.stdout", new=StringIO()) as f:
-            self.HBNB.onecmd("all User")
-            obj = f.getvalue()
-            my_id = obj[obj.find('(')+1:obj.find(')')]
-        with patch("sys.stdout", new=StringIO()) as f:
-            self.HBNB.onecmd("update User " + my_id)
-            self.assertEqual(
-                "** attribute name missing **\n", f.getvalue())
-        with patch("sys.stdout", new=StringIO()) as f:
-            self.HBNB.onecmd("update User " + my_id + " Name")
-            self.assertEqual(
-                "** value missing **\n", f.getvalue())
         
 if __name__ == "__main__":
     unittest.main()
