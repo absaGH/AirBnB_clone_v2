@@ -11,8 +11,7 @@ from sqlalchemy.orm import relationship
 
 
 class State(BaseModel, Base):
-    """ State class inherits from SQLAlchemy Base and links to the MySQL table states
-    """
+    """ State class inherits from Base and links to the MySQL table states"""
     __tablename__ = "states"
     name = Column(String(128), nullable=False)
     cities = relationship("City", backref="state", cascade="delete")
